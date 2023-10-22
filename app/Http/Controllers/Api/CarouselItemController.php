@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\CarouselItems;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\CarouselItemRequest;
 
 class CarouselItemController extends Controller
 {
@@ -19,9 +20,14 @@ class CarouselItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CarouselItemRequest $request)
     {
-        //
+    // Retrieve the validated input data...
+     $validated = $request->validated();
+
+        $carouselItem = CarouselItems::create($validated);
+        
+        return $carouselItem;
     }
 
     /**
