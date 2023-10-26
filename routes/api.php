@@ -4,6 +4,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CarouselItemController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\LetterController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,3 +30,25 @@ Route::post('/carousel',[CarouselItemController::class, 'store']);
 Route::put('/carousel/{id}',[CarouselItemController::class, 'update']);
 
 Route::delete('/carousel/{id}',[CarouselItemController::class, 'destroy']);
+
+
+
+Route::get('/user',[UserController::class, 'index']);
+
+Route::get('/user/{id}',[UserController::class, 'show']);
+
+Route::delete('/user/{id}',[UserController::class, 'destroy']);
+
+Route::post('/user',[UserController::class, 'store']);
+
+Route::put('/user/{id}',[CarouselItemController::class, 'update']);
+
+
+
+Route::get('/letter',[LetterController::class, 'index']);
+
+Route::get('/letter/{id}',[LetterController::class, 'show']);
+
+Route::delete('/letter/{id}',[LetterController::class, 'destroy']);
+
+Route::post('/letter',[LetterController::class, 'store']);
