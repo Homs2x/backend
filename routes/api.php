@@ -18,40 +18,39 @@ use App\Http\Controllers\OrderController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+ //Public APIs
+ Route::post('/login',  [AuthController::class,'login'])->name('user.login');
+ Route::post('/user', [UserController::class,'store'])->name('user.store'); 
+//Private APIs
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/logout',  [AuthController::class,'logout']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::controller(CarouselItemController::class)->group(function () {
+    Route::get('/carousel',         'index');
+    Route::get('/carousel/{id}',    'show');
+    Route::post('/carousel',        'store');
+    Route::put('/carousel/{id}',    'update');
+    Route::delete('/carousel/{id}', 'destroy');
+        });
+
+    Route::controller(UserController::class)->group(function () {
+    Route::get('/user', 'index');
+    Route::get('/user/{id}', 'show');
+    Route::delete('/user/{id}', 'destroy');
+    Route::post('/user', 'store');  
+    Route::put('/user/{id}', 'update');
+            });
+        
+    Route::controller(LetterController::class)->group(function () {
+    Route::get('/letter', 'index');
+    Route::get('/letter/{id}', 'show');
+    Route::delete('/letter/{id}' ,'destroy');
+    Route::post('/letter', 'store');
+                });       
 });
 
 
- 
-Route::controller(AuthController::class)->group(function () {
-    Route::post('/login', 'login')->name("user.login");
-Route::post('/logout', 'logout');
-});
-
-
-
-Route::controller(CarouselItemController::class)->group(function () {
-Route::get('/carousel', 'index');
-Route::get('/carousel/{id}', 'show');
-Route::post('/carousel', 'store');
-Route::put('/carousel/{id}', 'update');
-Route::delete('/carousel/{id}', 'destroy');
-});
 
 
 
 
-Route::get('/user',[UserController::class, 'index']);
-Route::get('/user/{id}',[UserController::class, 'show']);
-Route::delete('/user/{id}',[UserController::class, 'destroy']);
-Route::post('/user',[UserController::class, 'store']);
-Route::put('/user/{id}',[CarouselItemController::class, 'update']);
-
-
-
-Route::get('/letter',[LetterController::class, 'index']);
-Route::get('/letter/{id}',[LetterController::class, 'show']);
-Route::delete('/letter/{id}',[LetterController::class, 'destroy']);
-Route::post('/letter',[LetterController::class, 'store']);
