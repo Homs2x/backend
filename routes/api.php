@@ -39,6 +39,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/user/{id}', 'destroy');
     Route::post('/user', 'store');  
     Route::put('/user/{id}', 'update');
+    Route::put('/user/image/{id}', 'image')->name('user.image');
             });
         
     Route::controller(LetterController::class)->group(function () {

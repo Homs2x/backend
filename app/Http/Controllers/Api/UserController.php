@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -44,4 +45,21 @@ class UserController extends Controller
 
             return $carouselItem;
     }*/
+
+    public function image(UserRequest $request, string $id)
+    {
+        $User_id = User::findOrFail($id);
+
+        if(is_null($User_id->image)){
+            Storage::disk('public')->delete($User_id->image);
+        }
+
+        $User_id->image = $request->file('image')->storePublicly('image', 'public');
+
+        
+ 
+        $User_id->save();
+
+        return $User_id;
+    }
 }
