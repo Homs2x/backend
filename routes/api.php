@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\LetterController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Api\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +19,9 @@ use App\Http\Controllers\OrderController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+//Admin APIs
+
  //Public APIs
  Route::post('/login',  [AuthController::class,'login'])->name('user.login');
  Route::post('/user', [UserController::class,'store'])->name('user.store'); 
@@ -47,8 +51,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/letter/{id}', 'show');
     Route::delete('/letter/{id}' ,'destroy');
     Route::post('/letter', 'store');
-                });       
+                });  
+                
+                
+        //Profile Specific APIs
+     Route::get('/profile/show',[ProfileController::class,'show']);
+     Route::put('/profile/image',[ProfileController::class,'image'])->name('profile.image');
+     
 });
+
+
 
 
 
