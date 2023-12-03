@@ -33,6 +33,15 @@ use App\Http\Controllers\Api\ProfileController;
     Route::post('/letter', 'store');
     Route::put('/letter/{id}',    'update');
  });  
+
+ Route::controller(UserController::class)->group(function () {
+    Route::get('/user',         'index');
+    Route::get('/user/{id}',    'show');
+    Route::delete('/user/{id}', 'destroy');
+    Route::post('/user',        'store')->name('user.store');  
+    Route::put('/user/{id}',    'update');
+    Route::put('/user/image/{id}',  'image')->name('user.image');
+   });     
 //Private APIs
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout',  [AuthController::class,'logout']);
@@ -43,16 +52,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/carousel',        'store');
     Route::put('/carousel/{id}',    'update');
     Route::delete('/carousel/{id}', 'destroy');
-        });
-
-    Route::controller(UserController::class)->group(function () {
-    Route::get('/user', 'index');
-    Route::get('/user/{id}', 'show');
-    Route::delete('/user/{id}', 'destroy');
-    Route::post('/user', 'store');  
-    Route::put('/user/{id}', 'update');
-    Route::put('/user/image/{id}', 'image')->name('user.image');
-            });               
+        });          
                 
         //Profile Specific APIs
      Route::get('/profile/show',[ProfileController::class,'show']);

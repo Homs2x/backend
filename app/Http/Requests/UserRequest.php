@@ -28,16 +28,23 @@ class UserRequest extends FormRequest
                         'password'=>'required|min:8',
             ];
         }
+        else if(request()->routeIs('user.store') ){
+            return [
+                        'firstname'=> 'required|string|max:255',
+                        'lastname'=> 'required|string|max:255',
+                        'email'=>'required|string|max:255',
+                        'password'=>'required|min:8|confirmed',
+            ];
+        }
         else if(request()->routeIS('user.image') || request()->routeIS('user.image')){
             return [
                 'image' => 'required|image|mimes:jpg,bmp,png|max:2048',
             ];
         }
+        
 
         return [
-            'name'=>'required|string|max:255',
-            'email'=>'required|string|max:255|email',
-            'password'=>'required|min:8',
+            
         ];
     }
 }
