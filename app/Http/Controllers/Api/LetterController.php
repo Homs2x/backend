@@ -9,9 +9,19 @@ use App\Http\Requests\LetterRequest;
 
 class LetterController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Letters::all();
+        $letter = Letters::select("letter.sender","letter.subject","letter.body");
+
+        if($request->keyword){
+            $letter->where(function($query) use ($request){
+                $query->where('sender','ilike','%',$request->keyword, '%')
+                ->orwhere('sender','ilike','%',$request->keyword, '%')
+                ->prwhere('sender','ilike','%',$request->keyword, '%');
+            });
+        }
+
+        return $letter->get();
     }
     public function show(string $id)
     {
@@ -36,4 +46,15 @@ class LetterController extends Controller
 
         return $Letter_id;
     }
+    Public function update(LetterRequest $request, string $id)
+    {
+     $validated = $request->validated();
+
+        $Letter = Letters::findOrFail($id);
+
+        $Letter->update($validated);
+
+            return $Letter;
+    }
+
 }

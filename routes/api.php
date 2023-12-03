@@ -25,6 +25,14 @@ use App\Http\Controllers\Api\ProfileController;
  //Public APIs
  Route::post('/login',  [AuthController::class,'login'])->name('user.login');
  Route::post('/user', [UserController::class,'store'])->name('user.store'); 
+
+ Route::controller(LetterController::class)->group(function () {
+    Route::get('/letter', 'index');
+    Route::get('/letter/{id}', 'show');
+    Route::delete('/letter/{id}' ,'destroy');
+    Route::post('/letter', 'store');
+    Route::put('/letter/{id}',    'update');
+ });  
 //Private APIs
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout',  [AuthController::class,'logout']);
@@ -44,15 +52,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/user', 'store');  
     Route::put('/user/{id}', 'update');
     Route::put('/user/image/{id}', 'image')->name('user.image');
-            });
-        
-    Route::controller(LetterController::class)->group(function () {
-    Route::get('/letter', 'index');
-    Route::get('/letter/{id}', 'show');
-    Route::delete('/letter/{id}' ,'destroy');
-    Route::post('/letter', 'store');
-                });  
-                
+            });               
                 
         //Profile Specific APIs
      Route::get('/profile/show',[ProfileController::class,'show']);
